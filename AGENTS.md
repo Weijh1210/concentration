@@ -1,6 +1,6 @@
 # Concentration 开发协作规则
 
-本文件约束后续在此仓库工作的 Codex/开发者。用户当次指令优先于本文件。当前仓库仍处于方案阶段；未经用户确认关键决策，不初始化 App、创建付费资源或部署线上服务。
+本文件约束后续在此仓库工作的 Codex/开发者。用户当次指令优先于本文件。当前仓库已有本地 Expo MVP；未经用户授权，不创建付费资源或部署线上服务。
 
 ## 产品边界
 
@@ -13,8 +13,8 @@
 - 使用 React Native + Expo + TypeScript、Expo Router、Zustand、TanStack Query、SQLite、Supabase。引入其他主框架需写明理由。
 - 页面只负责渲染和交互；业务规则放在 `src/domain`，用例放在 `src/application`，I/O 放在 adapter/repository。保持 TypeScript 严格类型，不滥用 `any`。
 - 计时用状态机与持久化时间戳；每秒 UI tick 不得作为计时真值。所有状态变更及累计时长结算需原子化写入 SQLite。
-- 本地优先：业务写入先提交 SQLite 与 outbox，云端异步同步；处理重复请求、离线重试和冲突，禁止静默丢数据。
-- 数据库 schema 修改同时提交 `supabase/migrations/` 和本地 SQLite migration；云端每张用户表启用 RLS，并测试跨用户隔离。
+- 本地优先：当前版本先提交 SQLite；接入云端时同时实现 outbox、异步同步、重复请求和冲突处理，禁止静默丢数据。
+- 数据库 schema 修改需更新 `src/data/local/migrations.ts`；接入云端时同时提交 `supabase/migrations/`，云端每张用户表启用 RLS 并测试跨用户隔离。
 - 所有真实密钥仅放环境变量/secret manager；只提交 `.env.example`。`EXPO_PUBLIC_*` 视为公开配置，不能放服务端 secret。
 
 ## 测试与交付

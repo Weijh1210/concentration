@@ -1,0 +1,22 @@
+project_id = "concentration-local"
+[api]
+enabled = true
+port = 54421
+[db]
+port = 54422
+[studio]
+enabled = true
+port = 54423
+[local_smtp]
+enabled = true
+port = 54424
+[auth]
+site_url = "http://localhost:8081"
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+[functions.delete-account]
+verify_jwt = true
+
+[functions.recommend-focus]
+verify_jwt = true

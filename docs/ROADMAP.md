@@ -1,8 +1,10 @@
 # Concentration 分阶段开发计划
 
-> 状态：方案草案；2026-10-11。当前只完成设计文档，不初始化项目或创建云端资源。
+> 状态：持续更新；2026-10-11。本地 Expo MVP 已实现；云端、发布与真机验证仍待完成。详见 [README.md](../README.md)。
 
 ## 1. 阶段与交付
+
+当前进度：阶段 1 的 Expo 工程基础和阶段 2 的本地游客主流程已完成；iOS/Android 仅通过静态打包检查，真机验收仍属于阶段 4。阶段 3 的 Auth、迁移、RLS 与本地优先同步已实现并通过本机集成测试；线上配置、跨设备真机验收和发布仍待完成。
 
 | 阶段 | 目标 | 主要交付 | 完成门槛 |
 | --- | --- | --- | --- |
@@ -12,7 +14,7 @@
 | 3. 云端同步 | 账号与多设备数据 | Supabase Auth、数据库迁移/RLS、outbox、游客导入、冲突处理 | 场景 3/4；RLS、幂等、冲突集成测试通过 |
 | 4. 体验与真机验证 | 稳定可试用 MVP | 场景、白噪音、无障碍、错误恢复、性能和真机测试 | iOS/Android 后台/锁屏/强杀矩阵验证；无假功能 |
 | 5. 发布准备 | 小范围测试发布 | 隐私说明、账号删除路径、监控、商店素材和发布清单 | 用户批准任何线上创建/部署；发布检查通过 |
-| 6. 后续探索 | 个性化与 Together | AI 推荐实验、Realtime 方案、Growth 扩展 | 基于使用数据和隐私评估另立需求 |
+| 6. 后续探索 | 个性化与 Together | AI 推荐效果评估、Realtime 方案、Growth 扩展 | 基于使用数据和隐私评估另立需求 |
 
 阶段 2 可先使用明确标注的本地 Mock Auth 来验证游客流程；阶段 3 接入真实 Supabase。Mock 不得伪装成云端同步已完成。
 
@@ -55,7 +57,7 @@
 | Apple Developer Program | iOS TestFlight/商店发布前 | 注册团队、设置 Bundle ID、证书与商店资料 | Apple team ID、Bundle ID；密钥不写入仓库 |
 | Google Play Console | Android 商店发布前 | 注册开发者、配置应用签名和商店资料 | Android package name；签名密钥安全托管 |
 | 域名与隐私政策托管 | 正式发布前 | 购买/控制域名、发布隐私政策与支持页面 | 对应 URL；购买前先确认预算 |
-| 模型 API provider | 后续 AI 阶段 | 自选供应商账号、预算和数据处理条款 | API key 只放 Edge Function secret |
+| 模型 API provider | 真实 AI 推荐验收前 | 自选供应商账号、预算和数据处理条款 | API key 只放 Edge Function secret |
 | 音频素材来源 | 阶段 4 | 提供自有音频或确认可商用许可素材 | 素材文件及许可证记录 |
 
 本地开发可先不创建 Apple/Google 商店账号、模型供应商账号或付费服务。Supabase 和 Expo 的可用额度、定价和政策会变化，创建前应以各平台当前条款为准。不得把真实 key 写入 `.env.example` 或提交 Git。
@@ -68,10 +70,11 @@ EXPO_PUBLIC_SUPABASE_URL=
 EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 
 # 仅服务端 Edge Function secret，不进入客户端 bundle
-MODEL_API_KEY=
+AI_API_KEY=
+AI_MODEL=
 ```
 
-`MODEL_API_KEY` 在 MVP 规则推荐阶段不需要设置。密钥只通过各平台 secret 管理，不在文档、日志或仓库内传递。
+`AI_API_KEY`、`AI_MODEL` 仅配置在 Edge Function secrets；未配置时回退规则方案。密钥不在文档、日志或仓库内传递。
 
 ## 7. 初始化前需要确认的决策
 
@@ -83,4 +86,4 @@ MODEL_API_KEY=
 6. **后台白噪音**：首版是否要求锁屏后持续播放？若要求，需接受额外平台配置和真机验证。
 7. **品牌与内容**：是否已有视觉规范、图标、音频素材和隐私政策主体？没有时先采用可替换的开发占位资源，并明确标注。
 
-确认后才能进入阶段 1；创建付费资源、生产项目或部署线上服务需另行明确授权。
+用户已明确授权实现本地 Expo MVP，阶段 1 和本地核心流程已开始。云端地域、预算及发布相关决策仍需确认；创建付费资源、生产项目或部署线上服务需另行明确授权。
