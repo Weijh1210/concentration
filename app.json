@@ -6,6 +6,9 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "web": {
+      "output": "single"
+    },
     "plugins": [
       "expo-router",
       "expo-sqlite",

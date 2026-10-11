@@ -46,3 +46,6 @@ yarn-error.*
 # Supabase CLI local state
 supabase/.branches/
 supabase/.temp/
+
+# Vercel project link state
+.vercel/

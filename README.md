@@ -15,6 +15,12 @@ npm start
 
 游客模式不需要 `.env`。使用云端账号前复制 `.env.example` 为 `.env` 并填写 Supabase Project URL 和 publishable key；配置步骤见 [Supabase Setup](docs/SUPABASE_SETUP.md)。线上项目尚未连接。
 
+## 分享 Web 体验版
+
+项目可导出为静态 Expo Web 站点，`vercel.json` 已配置 SPA 路由和 Web SQLite 所需的 COEP/COOP 响应头。在 Vercel Dashboard 导入 GitHub 仓库 `Weijh1210/concentration`，选择 `main` 分支并检查配置：Framework Preset 为 `Other`、Build Command 为 `npx expo export --platform web`、Output Directory 为 `dist`。完成部署后，分享 Vercel 给出的 HTTPS 地址即可。无需 Supabase 配置也可体验游客和离线规则推荐；登录、云同步和真实 AI 仍需先配置 Supabase 服务端及公开客户端变量。
+
+Web 版在每位访客自己的浏览器中保存本地数据，不会让访客共享任务或统计。`expo-sqlite` 的 Web 支持仍处于 alpha；部署后应在目标浏览器验证创建任务、专注计时、反馈、刷新恢复和深链接。Vercel 托管的是 Web 体验版，不会生成 iOS/Android 安装包。
+
 ## 检查
 
 ```bash
